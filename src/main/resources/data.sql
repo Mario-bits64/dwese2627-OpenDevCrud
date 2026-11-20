@@ -12,7 +12,7 @@ INSERT IGNORE INTO proyectos (
 ) VALUES
 (1, 'OpenDev', 'Plataforma para que desarrolladores publiquen proyectos y encuentren colaboradores.',
     'Backend Java, Frontend', 'DESARROLLO', 'PUBLICO',
-    'https://github.com/opendev/opendev', NULL, NOW(), NULL, 15, 1),
+    'https://github.com/Mario-bits64/dwese2627-OpenDevCrud', NULL, NOW(), NULL, 15, 1),
 (2, 'TaskBoard', 'Tablero Kanban sencillo para organizar las tareas de un equipo.',
     'Frontend', 'FINALIZADO', 'PRIVADO',
     'https://github.com/opendev/taskboard', 'https://taskboard.opendev.local', DATE_SUB(NOW(), INTERVAL 2 MONTH), DATE_SUB(NOW(), INTERVAL 1 WEEK), 42, 2);
