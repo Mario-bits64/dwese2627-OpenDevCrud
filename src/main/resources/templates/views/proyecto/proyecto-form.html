@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}" translate="no" class="notranslate">
+<head th:replace="~{fragments/head :: head(#{msg.proyecto-form.title})}"></head>
+<body class="d-flex flex-column min-vh-100">
+<header th:replace="~{fragments/header :: header}"></header>
+
+<main class="form-page">
+    <div class="form-card">
+        <h1 th:text="${proyecto.id} == null ? #{msg.proyecto-form.add} : #{msg.proyecto-form.edit}">Proyecto</h1>
+        <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
+        <form th:action="${proyecto.id == null} ? @{/proyectos/insert} : @{/proyectos/update}"
+              th:object="${proyecto}" method="post" class="mt-3">
+            <input type="hidden" th:field="*{id}">
+
+            <!-- Nombre -->
+            <div class="mb-3">
+                <label for="nombre" class="form-label" th:text="#{msg.proyecto-form.nombre}">Nombre</label>
+                <input type="text" th:field="*{nombre}" id="nombre" class="form-control">
+                <div th:if="${#fields.hasErrors('nombre')}" class="text-danger" th:errors="*{nombre}"></div>
+            </div>
+
+            <!-- Descripción -->
+            <div class="mb-3">
+                <label for="descripcion" class="form-label" th:text="#{msg.proyecto-form.descripcion}">Descripción</label>
+                <textarea th:field="*{descripcion}" id="descripcion" rows="3" class="form-control"></textarea>
+                <div th:if="${#fields.hasErrors('descripcion')}" class="text-danger" th:errors="*{descripcion}"></div>
+            </div>
+
+            <!-- Perfiles necesarios -->
+            <div class="mb-3">
+                <label for="perfilesNecesarios" class="form-label" th:text="#{msg.proyecto-form.perfilesNecesarios}">Perfiles necesarios</label>
+                <input type="text" th:field="*{perfilesNecesarios}" id="perfilesNecesarios" class="form-control">
+                <small class="form-text text-muted" th:text="#{msg.proyecto-form.perfilesNecesarios.help}"></small>
+                <div th:if="${#fields.hasErrors('perfilesNecesarios')}" class="text-danger" th:errors="*{perfilesNecesarios}"></div>
+            </div>
+
+            <!-- Fase -->
+            <div class="mb-3">
+                <label for="fase" class="form-label" th:text="#{msg.proyecto-form.fase}">Fase</label>
+                <select id="fase" class="form-select" th:field="*{fase}">
+                    <option value="" th:text="#{msg.proyecto-form.select}">-- Selecciona una opción --</option>
+                    <option value="IDEA" th:text="#{msg.proyecto.fase.IDEA}">Idea</option>
+                    <option value="DESARROLLO" th:text="#{msg.proyecto.fase.DESARROLLO}">En desarrollo</option>
+                    <option value="FINALIZADO" th:text="#{msg.proyecto.fase.FINALIZADO}">Finalizado</option>
+                </select>
+                <div th:if="${#fields.hasErrors('fase')}" class="text-danger" th:errors="*{fase}"></div>
+            </div>
+
+            <!-- Visibilidad -->
+            <div class="mb-3">
+                <label for="visibilidad" class="form-label" th:text="#{msg.proyecto-form.visibilidad}">Visibilidad</label>
+                <select id="visibilidad" class="form-select" th:field="*{visibilidad}">
+                    <option value="" th:text="#{msg.proyecto-form.select}">-- Selecciona una opción --</option>
+                    <option value="PUBLICO" th:text="#{msg.proyecto.visibilidad.PUBLICO}">Público</option>
+                    <option value="PRIVADO" th:text="#{msg.proyecto.visibilidad.PRIVADO}">Privado</option>
+                </select>
+                <div th:if="${#fields.hasErrors('visibilidad')}" class="text-danger" th:errors="*{visibilidad}"></div>
+            </div>
+
+            <!-- URL del repositorio -->
+            <div class="mb-3">
+                <label for="repositorioUrl" class="form-label" th:text="#{msg.proyecto-form.repositorioUrl}">URL del repositorio</label>
+                <input type="text" th:field="*{repositorioUrl}" id="repositorioUrl" class="form-control" placeholder="https://">
+                <div th:if="${#fields.hasErrors('repositorioUrl')}" class="text-danger" th:errors="*{repositorioUrl}"></div>
+            </div>
+
+            <!-- URL de la demo -->
+            <div class="mb-3">
+                <label for="demoUrl" class="form-label" th:text="#{msg.proyecto-form.demoUrl}">URL de la demo</label>
+                <input type="text" th:field="*{demoUrl}" id="demoUrl" class="form-control" placeholder="https://">
+                <div th:if="${#fields.hasErrors('demoUrl')}" class="text-danger" th:errors="*{demoUrl}"></div>
+            </div>
+
+            <!-- Fecha de finalización -->
+            <div class="mb-3">
+                <label for="fechaFinalizacion" class="form-label" th:text="#{msg.proyecto-form.fechaFinalizacion}">Fecha de finalización</label>
+                <input type="datetime-local" th:field="*{fechaFinalizacion}" id="fechaFinalizacion" class="form-control">
+                <small class="form-text text-muted" th:text="#{msg.proyecto-form.fechaFinalizacion.help}"></small>
+                <div th:if="${#fields.hasErrors('fechaFinalizacion')}" class="text-danger" th:errors="*{fechaFinalizacion}"></div>
+            </div>
+
+            <!-- Usuario creador -->
+            <div class="mb-3">
+                <label for="usuarioId" class="form-label" th:text="#{msg.proyecto-form.usuario}">Creado por</label>
+                <select id="usuarioId" class="form-select" th:field="*{usuarioId}">
+                    <option value="" th:text="#{msg.proyecto-form.usuario.select}">-- Selecciona un usuario --</option>
+                    <option th:each="usuario : ${usuarios}"
+                            th:value="${usuario.id}"
+                            th:text="${usuario.email} + ' (' + ${usuario.rolSistema} + ')'">
+                    </option>
+                </select>
+                <div th:if="${#fields.hasErrors('usuarioId')}" class="text-danger" th:errors="*{usuarioId}"></div>
+            </div>
+
+            <button type="submit" class="btn btn-primary"
+                    th:text="${proyecto.id} == null ? #{msg.action.create} : #{msg.action.save}"></button>
+            <a th:href="@{/proyectos}" class="btn btn-secondary" th:text="#{msg.action.backToList}"></a>
+        </form>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/scripts :: scripts}"></div>
+</body>
+</html>

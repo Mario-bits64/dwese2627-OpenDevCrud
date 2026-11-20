@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}" translate="no" class="notranslate">
+<head th:replace="~{fragments/head :: head(#{msg.app.title})}"></head>
+
+<body class="d-flex flex-column min-vh-100">
+
+<!-- Insertar el fragmento del header -->
+<header th:replace="~{fragments/header :: header}"></header>
+
+<!-- Contenido dinámico -->
+<main class="home-page">
+    <div class="home-card">
+        <h1 class="display-5 fw-bold" th:text="#{msg.home.title}">Gestión de proyectos</h1>
+        <p class="lead text-muted" th:text="#{msg.home.description}">
+            Administra los proyectos de OpenDev.
+        </p>
+        <div class="d-flex flex-column flex-sm-row justify-content-center gap-3 mt-4">
+            <a class="btn btn-dark btn-lg" th:href="@{/proyectos}" th:text="#{msg.home.proyectos}">Gestionar proyectos</a>
+        </div>
+    </div>
+</main>
+
+<!-- Insertar el fragmento del footer -->
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+
+<div th:replace="~{fragments/scripts :: scripts}"></div>
+
+</body>
+</html>

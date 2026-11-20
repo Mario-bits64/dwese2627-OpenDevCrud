@@ -1,10 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<header th:fragment="header" class="border-bottom bg-light" xmlns:th="http://www.thymeleaf.org">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
 
-</body>
-</html>
+
+            <!-- Logo -->
+            <a class="navbar-brand d-flex align-items-center" th:href="@{/}">
+                <img th:src="@{/images/logo.png}" th:alt="#{msg.app.title}" width="40" height="32" class="me-2">
+                <span class="fw-semibold text-primary" th:text="#{msg.app.title}">OpenDev</span>
+            </a>
+
+
+            <!-- Botón hamburguesa -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu"
+                    aria-controls="navbarMenu" aria-expanded="false"
+                    th:attr="aria-label=#{msg.nav.toggle}">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+
+            <!-- Contenido colapsable -->
+            <div class="collapse navbar-collapse" id="navbarMenu">
+
+
+                <!-- Menú principal -->
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/}" th:text="#{msg.nav.home}">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/proyectos}" th:text="#{msg.nav.proyectos}">Proyectos</a>
+                    </li>
+                </ul>
+
+
+                <!-- Selector de idioma -->
+                <form method="get" action="" class="d-lg-flex align-items-center me-3">
+                    <input type="hidden" name="id" th:if="${param.id != null}" th:value="${param.id[0]}">
+                    <input type="hidden" name="page" th:if="${param.page != null}" th:value="${param.page[0]}">
+                    <input type="hidden" name="size" th:if="${param.size != null}" th:value="${param.size[0]}">
+                    <input type="hidden" name="sortField" th:if="${param.sortField != null}" th:value="${param.sortField[0]}">
+                    <input type="hidden" name="sortDir" th:if="${param.sortDir != null}" th:value="${param.sortDir[0]}">
+                    <label for="langSelect" class="visually-hidden" th:text="#{msg.nav.language}">Idioma</label>
+                    <select id="langSelect" name="lang" class="form-select form-select-sm"
+                            onchange="this.form.submit()">
+                        <option value="es" th:selected="${#locale.language == 'es'}" th:text="#{msg.language.spanish}">Español</option>
+                        <option value="en" th:selected="${#locale.language == 'en'}" th:text="#{msg.language.english}">Inglés</option>
+                    </select>
+                </form>
+            </div>
+        </div>
+    </nav>
+</header>

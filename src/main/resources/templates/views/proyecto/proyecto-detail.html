@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}" translate="no" class="notranslate">
+<head th:replace="~{fragments/head :: head(#{msg.proyecto-detail.title})}"></head>
+<body class="d-flex flex-column min-vh-100">
+<header th:replace="~{fragments/header :: header}"></header>
+
+<main class="list-page detail-page">
+    <div class="list-card detail-card">
+
+        <h1>
+            <span th:text="#{msg.proyecto-detail.title}"></span>:
+            <span th:text="${proyecto.nombre}"></span>
+        </h1>
+
+        <div class="mt-3 detail-section">
+            <h2 class="h5" th:text="#{msg.proyecto-detail.section.proyectoData}"></h2>
+            <dl class="row detail-fields">
+                <dt class="col-sm-3" th:text="#{msg.proyecto-detail.field.id}"></dt>
+                <dd class="col-sm-9" th:text="${proyecto.id}"></dd>
+
+                <dt class="col-sm-3" th:text="#{msg.proyecto-detail.field.nombre}"></dt>
+                <dd class="col-sm-9" th:text="${proyecto.nombre}"></dd>
+
+                <dt class="col-sm-3" th:text="#{msg.proyecto-detail.field.descripcion}"></dt>
+                <dd class="col-sm-9" th:text="${proyecto.descripcion}"></dd>
+
+                <dt class="col-sm-3" th:text="#{msg.proyecto-detail.field.perfilesNecesarios}"></dt>
+                <dd class="col-sm-9" th:text="${proyecto.perfilesNecesarios == null ? '—' : proyecto.perfilesNecesarios}"></dd>
+
+                <dt class="col-sm-3" th:text="#{msg.proyecto-detail.field.fase}"></dt>
+                <dd class="col-sm-9"><span class="badge text-bg-info" th:text="#{${'msg.proyecto.fase.' + proyecto.fase}}"></span></dd>
+
+                <dt class="col-sm-3" th:text="#{msg.proyecto-detail.field.visibilidad}"></dt>
+                <dd class="col-sm-9" th:text="#{${'msg.proyecto.visibilidad.' + proyecto.visibilidad}}"></dd>
+
+                <dt class="col-sm-3" th:text="#{msg.proyecto-detail.field.repositorioUrl}"></dt>
+                <dd class="col-sm-9">
+                    <a th:if="${proyecto.repositorioUrl != null}" th:href="${proyecto.repositorioUrl}"
+                       th:text="${proyecto.repositorioUrl}" target="_blank" rel="noopener"></a>
+                    <span th:unless="${proyecto.repositorioUrl != null}">—</span>
+                </dd>
+
+                <dt class="col-sm-3" th:text="#{msg.proyecto-detail.field.demoUrl}"></dt>
+                <dd class="col-sm-9">
+                    <a th:if="${proyecto.demoUrl != null}" th:href="${proyecto.demoUrl}"
+                       th:text="${proyecto.demoUrl}" target="_blank" rel="noopener"></a>
+                    <span th:unless="${proyecto.demoUrl != null}">—</span>
+                </dd>
+
+                <dt class="col-sm-3" th:text="#{msg.proyecto-detail.field.fechaCreacion}"></dt>
+                <dd class="col-sm-9" th:text="${proyecto.fechaCreacion == null ? '—' : #temporals.format(proyecto.fechaCreacion, 'dd/MM/yyyy HH:mm')}"></dd>
+
+                <dt class="col-sm-3" th:text="#{msg.proyecto-detail.field.fechaFinalizacion}"></dt>
+                <dd class="col-sm-9" th:text="${proyecto.fechaFinalizacion == null ? '—' : #temporals.format(proyecto.fechaFinalizacion, 'dd/MM/yyyy HH:mm')}"></dd>
+
+                <dt class="col-sm-3" th:text="#{msg.proyecto-detail.field.numVisitas}"></dt>
+                <dd class="col-sm-9" th:text="${proyecto.numVisitas}"></dd>
+            </dl>
+        </div>
+
+        <div class="mt-4 detail-section">
+            <h2 class="h5" th:text="#{msg.proyecto-detail.section.usuario}"></h2>
+
+            <div class="alert alert-info" th:if="${proyecto.usuario == null}"
+                 th:text="#{msg.proyecto-detail.usuario.empty}"></div>
+
+            <dl class="row detail-fields" th:if="${proyecto.usuario != null}">
+                <dt class="col-sm-3" th:text="#{msg.proyecto-detail.usuario.field.id}"></dt>
+                <dd class="col-sm-9" th:text="${proyecto.usuario.id}"></dd>
+
+                <dt class="col-sm-3" th:text="#{msg.proyecto-detail.usuario.field.email}"></dt>
+                <dd class="col-sm-9" th:text="${proyecto.usuario.email}"></dd>
+
+                <dt class="col-sm-3" th:text="#{msg.proyecto-detail.usuario.field.rolSistema}"></dt>
+                <dd class="col-sm-9"><span class="badge text-bg-secondary" th:text="${proyecto.usuario.rolSistema}"></span></dd>
+
+                <dt class="col-sm-3" th:text="#{msg.proyecto-detail.usuario.field.activo}"></dt>
+                <dd class="col-sm-9" th:text="${proyecto.usuario.activo} ? #{msg.common.yes} : #{msg.common.no}"></dd>
+
+                <dt class="col-sm-3" th:text="#{msg.proyecto-detail.usuario.field.dobleFactorActivo}"></dt>
+                <dd class="col-sm-9" th:text="${proyecto.usuario.dobleFactorActivo} ? #{msg.common.yes} : #{msg.common.no}"></dd>
+
+                <dt class="col-sm-3" th:text="#{msg.proyecto-detail.usuario.field.fechaRegistro}"></dt>
+                <dd class="col-sm-9" th:text="${proyecto.usuario.fechaRegistro == null ? '—' : #temporals.format(proyecto.usuario.fechaRegistro, 'dd/MM/yyyy HH:mm')}"></dd>
+            </dl>
+        </div>
+
+        <div class="mt-3 detail-actions">
+            <a th:href="@{/proyectos/edit(id=${proyecto.id})}" class="btn btn-primary" th:text="#{msg.action.edit}"></a>
+            <a th:href="@{/proyectos}" class="btn btn-secondary" th:text="#{msg.action.backToList}"></a>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/scripts :: scripts}"></div>
+</body>
+</html>

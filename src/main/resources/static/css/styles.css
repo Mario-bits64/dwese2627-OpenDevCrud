@@ -1,0 +1,478 @@
+/* =========================================================
+  VARIABLES BASE
+  ========================================================= */
+:root {
+    --color-primary: #000000;          /* Negro para la navbar */
+    --color-primary-hover: #2f2f2f;    /* Negro ligeramente más claro (antracita) */
+    --color-text-light: #ffffff;       /* Texto blanco */
+    --color-text-hover: #e3e3e3;       /* Gris claro para hover */
+    --color-bg-footer: #f8f9fa;
+}
+
+
+/* =========================================================
+  ESTRUCTURA DE PÁGINA (FOOTER SIEMPRE VISIBLE)
+  ========================================================= */
+html {
+    height: 100%;
+}
+
+
+/* El body ocupa como MÍNIMO toda la ventana (no una altura fija):
+   así las páginas largas crecen y hacen scroll y el footer queda siempre al final. */
+body {
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    background-color: #ffffff;
+}
+
+
+/* Header y footer no se encogen nunca */
+body > header,
+body > footer {
+    flex-shrink: 0;
+}
+
+
+/* Contenedor principal que empuja el footer hacia abajo */
+.content-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+main.home-page {
+    background-color: #f1f3f5;
+}
+
+.home-card {
+    width: 100%;
+    max-width: 850px;
+    padding: 3rem 2rem;
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Centra verticalmente el contenido si la página es corta */
+main {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+
+/* Centrado vertical "seguro": si la tarjeta cabe se centra,
+   si es más alta que la pantalla empieza arriba sin quedar cortada bajo el header. */
+main > .home-card,
+main > .form-card,
+main > .list-card {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+
+/* =========================================================
+  HEADER / NAVBAR
+  ========================================================= */
+.navbar {
+    background-color: var(--color-primary);   /* Fondo negro */
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+
+/* Logo y texto */
+.navbar-brand span {
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 0.3px;
+    color: var(--color-text-light);
+}
+
+
+/* Enlaces del menú */
+.nav-link {
+    color: var(--color-text-light) !important;
+    font-weight: 500;
+    transition: color 0.2s ease, background-color 0.2s ease;
+    border-radius: 5px;
+    padding: 0.5rem 0.75rem;
+}
+
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--color-text-hover) !important;
+    background-color: var(--color-primary-hover);
+}
+
+
+/* Botón hamburguesa */
+.navbar-toggler {
+    border: none;
+}
+
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,255,255,0.95)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+
+/* Avatar */
+.navbar img.rounded-circle {
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+
+.navbar img.rounded-circle:hover {
+    transform: scale(1.05);
+    border-color: #fff;
+}
+
+
+/* Dropdown */
+.dropdown-menu {
+    border-radius: 0.5rem;
+    overflow: hidden;
+    min-width: 180px;
+}
+
+
+.dropdown-menu .dropdown-item:hover {
+    background-color: #e9ecef;
+}
+
+
+/* =========================================================
+  FOOTER
+  ========================================================= */
+.footer {
+    width: 100%;
+    background-color: var(--color-bg-footer);
+    padding: 1rem 0;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #555;
+    border-top: 1px solid #ddd;
+}
+
+
+/* =========================================================
+  RESPONSIVE
+  ========================================================= */
+@media (max-width: 992px) {
+    .navbar-brand span {
+        font-size: 1rem;
+    }
+
+
+    .navbar img.rounded-circle {
+        width: 36px;
+        height: 36px;
+    }
+
+
+    /* Fondo negro también en menú colapsado */
+    .navbar-collapse {
+        background-color: var(--color-primary);
+    }
+
+
+    .nav-link {
+        display: block;
+        color: var(--color-text-light) !important;
+    }
+
+
+    .nav-link:hover {
+        background-color: var(--color-primary-hover);
+        color: var(--color-text-hover) !important;
+    }
+}
+
+
+
+
+/* =========================================================
+  FORMULARIOS CENTRADOS Y ESTILIZADOS
+  ========================================================= */
+
+
+/* Contenedor principal del formulario */
+main.form-page {
+    display: flex;
+    align-items: center;
+    background-color: #f1f3f5; /* gris más claro que bg-light para contraste */
+    padding: 2rem;
+}
+
+
+/* Caja del formulario */
+.form-card {
+    background-color: #ffffff;            /* blanco */
+    padding: 2.5rem;
+    border-radius: 12px;                  /* bordes suaves */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1); /* sombra elegante */
+    max-width: 500px;
+    width: 100%;
+    border: 1px solid #dee2e6;            /* borde sutil */
+}
+
+
+/* Título del formulario */
+.form-card h1 {
+    text-align: center;
+    color: #000000;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+
+/* Etiquetas y campos */
+.form-card .form-label {
+    font-weight: 500;
+    color: #333;
+}
+
+
+.form-card .form-control {
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    padding: 0.6rem 0.75rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+/* Efecto al enfocar */
+.form-card .form-control:focus {
+    border-color: #000;
+    box-shadow: 0 0 0 0.15rem rgba(0,0,0,0.15);
+}
+
+
+/* Botones */
+.form-card .btn-primary {
+    background-color: #000;
+    border-color: #000;
+    font-weight: 500;
+    width: 100%;
+    padding: 0.6rem;
+}
+
+
+.form-card .btn-primary:hover {
+    background-color: #2f2f2f;
+    border-color: #2f2f2f;
+}
+
+
+/* Botón secundario */
+.form-card .btn-secondary {
+    width: 100%;
+    margin-top: 0.75rem;
+    font-weight: 500;
+}
+
+
+/* Alertas */
+.form-card .alert {
+    border-radius: 8px;
+    text-align: center;
+}
+
+
+/* =========================================================
+  LISTAS Y TABLAS (Diseño homogéneo con los formularios)
+  ========================================================= */
+
+
+/* Contenedor general */
+main.list-page {
+    display: flex;
+    align-items: center;
+    background-color: #f1f3f5; /* gris claro */
+    padding: 2rem;
+}
+
+
+/* Caja blanca centrada */
+.list-card {
+    background-color: #ffffff;
+    padding: 2rem 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid #dee2e6;
+    width: 100%;
+    max-width: 900px;
+}
+
+.user-list-card {
+    max-width: 1500px;
+}
+
+.user-list-card .table {
+    min-width: 1250px;
+    font-size: 0.9rem;
+}
+
+
+/* Título */
+.list-card h1 {
+    color: #000;
+    font-size: 1.6rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+
+/* Botones superiores */
+.list-card .btn-success {
+    background-color: #198754;
+    border-color: #198754;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+
+.list-card .btn-success:hover {
+    background-color: #157347;
+    border-color: #157347;
+}
+
+
+/* Botón secundario inferior */
+.list-card .btn-secondary {
+    font-weight: 500;
+    margin-top: 1rem;
+}
+
+
+/* Tabla */
+.list-card .table {
+    margin-top: 1rem;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+
+.list-card .table th {
+    background-color: #000; /* header negro */
+    color: #fff;
+    border-color: #000;
+    text-align: center;
+}
+
+
+.list-card .table td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+
+.list-card .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f8f9fa;
+}
+
+
+/* Botones dentro de tabla */
+.list-card .btn-primary.btn-sm {
+    background-color: #000;
+    border-color: #000;
+}
+
+
+.list-card .btn-primary.btn-sm:hover {
+    background-color: #2f2f2f;
+    border-color: #2f2f2f;
+}
+
+
+.list-card .btn-danger.btn-sm {
+    font-weight: 500;
+}
+
+
+/* Alertas */
+.list-card .alert {
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .list-card {
+        padding: 1.5rem;
+    }
+
+
+    .list-card h1 {
+        font-size: 1.3rem;
+    }
+
+
+    .list-card .table {
+        font-size: 0.9rem;
+    }
+
+
+    .list-card .btn-sm {
+        padding: 0.25rem 0.5rem;
+    }
+}
+
+
+/* =========================================================
+  ALINEACIÓN DE BOTONES
+  ========================================================= */
+
+/* Botones de acción dentro de las tablas: en línea, centrados y con el mismo hueco */
+.table-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.35rem;
+    flex-wrap: nowrap;
+}
+
+.table-actions .btn {
+    margin: 0;
+}
+
+/* Botones al pie de las fichas de detalle: misma altura y centrados */
+.detail-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.list-card .detail-actions .btn {
+    margin: 0;
+}
+
+/* Botones de los formularios: mismo tamaño y separación uniforme */
+.form-card .btn-primary,
+.form-card .btn-secondary {
+    display: block;
+    width: 100%;
+    margin-left: 0;
+    padding: 0.6rem;
+}

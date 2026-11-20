@@ -11,8 +11,8 @@
 	<groupId>org.alixar.daw2.mariojurado</groupId>
 	<artifactId>dwese2627-OpenDevCrud-webapp-mariojurado</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name/>
-	<description/>
+	<name>dwese2627-OpenDevCrud-webapp-mariojurado</name>
+	<description>CRUD de proyectos (relación 1:N con usuarios) con JPA/Hibernate, DTOs, mappers, paginación y ordenación.</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -30,9 +30,15 @@
 		<java.version>21</java.version>
 	</properties>
 	<dependencies>
+		<!-- JPA + Hibernate (Spring Data JPA) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<!-- Dependencia para las validaciones de Spring -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

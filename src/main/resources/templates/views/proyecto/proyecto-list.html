@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}" translate="no" class="notranslate">
+<head th:replace="~{fragments/head :: head(#{msg.proyecto-list.title})}"></head>
+<body class="d-flex flex-column min-vh-100">
+<header th:replace="~{fragments/header :: header}"></header>
+
+<main class="list-page">
+    <div class="list-card">
+        <h1 th:text="#{msg.proyecto-list.title}">Listado de proyectos</h1>
+        <a th:href="@{/proyectos/new}" class="btn btn-success" th:text="#{msg.proyecto-list.add}">Añadir proyecto</a>
+
+        <div th:if="${successMessage}" class="alert alert-success mt-3" th:text="${successMessage}"></div>
+        <div th:if="${errorMessage}" class="alert alert-danger mt-3" th:text="${errorMessage}"></div>
+
+        <div class="table-responsive mt-3" th:if="${proyectos != null}">
+            <table class="table table-bordered table-striped align-middle">
+                <thead>
+                <tr>
+                    <th><a th:href="@{/proyectos(page=${currentPage}, size=${pageSize}, sortField='id', sortDir=${sortField == 'id' ? reverseSortDir : 'asc'})}"
+                           th:text="|#{msg.proyecto-list.col.id} ${sortField == 'id' ? (sortDir == 'asc' ? '▲' : '▼') : ''}|">ID</a></th>
+                    <th><a th:href="@{/proyectos(page=${currentPage}, size=${pageSize}, sortField='nombre', sortDir=${sortField == 'nombre' ? reverseSortDir : 'asc'})}"
+                           th:text="|#{msg.proyecto-list.col.nombre} ${sortField == 'nombre' ? (sortDir == 'asc' ? '▲' : '▼') : ''}|">Nombre</a></th>
+                    <th><a th:href="@{/proyectos(page=${currentPage}, size=${pageSize}, sortField='fase', sortDir=${sortField == 'fase' ? reverseSortDir : 'asc'})}"
+                           th:text="|#{msg.proyecto-list.col.fase} ${sortField == 'fase' ? (sortDir == 'asc' ? '▲' : '▼') : ''}|">Fase</a></th>
+                    <th><a th:href="@{/proyectos(page=${currentPage}, size=${pageSize}, sortField='visibilidad', sortDir=${sortField == 'visibilidad' ? reverseSortDir : 'asc'})}"
+                           th:text="|#{msg.proyecto-list.col.visibilidad} ${sortField == 'visibilidad' ? (sortDir == 'asc' ? '▲' : '▼') : ''}|">Visibilidad</a></th>
+                    <th><a th:href="@{/proyectos(page=${currentPage}, size=${pageSize}, sortField='usuario', sortDir=${sortField == 'usuario' ? reverseSortDir : 'asc'})}"
+                           th:text="|#{msg.proyecto-list.col.usuario} ${sortField == 'usuario' ? (sortDir == 'asc' ? '▲' : '▼') : ''}|">Creado por</a></th>
+                    <th><a th:href="@{/proyectos(page=${currentPage}, size=${pageSize}, sortField='fechaCreacion', sortDir=${sortField == 'fechaCreacion' ? reverseSortDir : 'asc'})}"
+                           th:text="|#{msg.proyecto-list.col.fechaCreacion} ${sortField == 'fechaCreacion' ? (sortDir == 'asc' ? '▲' : '▼') : ''}|">Fecha de creación</a></th>
+                    <th><a th:href="@{/proyectos(page=${currentPage}, size=${pageSize}, sortField='numVisitas', sortDir=${sortField == 'numVisitas' ? reverseSortDir : 'asc'})}"
+                           th:text="|#{msg.proyecto-list.col.numVisitas} ${sortField == 'numVisitas' ? (sortDir == 'asc' ? '▲' : '▼') : ''}|">Visitas</a></th>
+                    <th th:text="#{msg.proyecto-list.col.actions}">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="proyecto : ${proyectos}">
+                    <td th:text="${proyecto.id}"></td>
+                    <td th:text="${proyecto.nombre}"></td>
+                    <td><span class="badge text-bg-info" th:text="#{${'msg.proyecto.fase.' + proyecto.fase}}"></span></td>
+                    <td>
+                        <span th:if="${proyecto.visibilidad == 'PUBLICO'}" class="badge text-bg-success"
+                              th:text="#{msg.proyecto.visibilidad.PUBLICO}"></span>
+                        <span th:unless="${proyecto.visibilidad == 'PUBLICO'}" class="badge text-bg-secondary"
+                              th:text="#{msg.proyecto.visibilidad.PRIVADO}"></span>
+                    </td>
+                    <td th:text="${proyecto.usuarioEmail}"></td>
+                    <td class="text-nowrap"
+                        th:text="${proyecto.fechaCreacion == null ? '—' : #temporals.format(proyecto.fechaCreacion, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td th:text="${proyecto.numVisitas}">0</td>
+                    <td class="text-nowrap">
+                        <div class="table-actions">
+                        <a th:href="@{/proyectos/detail(id=${proyecto.id})}" class="btn btn-outline-secondary btn-sm" th:text="#{msg.proyecto-list.viewDetail}"></a>
+                        <a th:href="@{/proyectos/edit(id=${proyecto.id})}" class="btn btn-primary btn-sm" th:text="#{msg.action.edit}"></a>
+                        <form th:action="@{/proyectos/delete}" method="post" class="m-0">
+                            <input type="hidden" name="id" th:value="${proyecto.id}">
+                            <button type="submit" class="btn btn-danger btn-sm"
+                                    th:onclick="|return confirm('#{msg.proyecto-list.confirm}');|"
+                                    th:text="#{msg.action.delete}"></button>
+                        </form>
+                        </div>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(proyectos)}">
+                    <td colspan="8" class="text-muted py-4" th:text="#{msg.proyecto-list.empty}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Paginación -->
+        <div th:replace="~{fragments/pagination :: pagination('/proyectos')}"></div>
+
+        <a th:href="@{/}" class="btn btn-secondary mt-3" th:text="#{msg.action.backHome}"></a>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/scripts :: scripts}"></div>
+</body>
+</html>
